@@ -22,20 +22,7 @@ fun main() {
 
     printlnMultiply("- ", 25)
 
-    println("Список игровых режимов:\n")
-
-    for (i in GameMode.values()) {
-        println("${i.ordinal + 1}. ${i.title} - попыток: ${i.attempts}")
-    }
-
-    printlnMultiply("- ", 25)
-
-    Color.reset()
-    println()
-
     val gameMode = selectGameMode()
-
-    Color.println("Вы выбрали режим ${gameMode.title}. Удачи в игре!", Color.Blue)
     // endregion
 
     Color.set(Color.BrightGreen)
@@ -50,7 +37,7 @@ fun main() {
 
     val password = Random.nextInt(MIN, MAX)
 
-    while (attemptsLeft >= 0) {
+    while (attemptsLeft > 0) {
         print("\nВведите пароль >> ")
 
         val input = readln().toIntOrNull()
@@ -58,7 +45,7 @@ fun main() {
         if ((input == null) or (input !in MIN until MAX)) {
             Color.set(Color.Red)
 
-            println("Это не трёхзначное число! Вы потратили попытку зря D:")
+            println("\nЭто не трёхзначное число! Вы потратили попытку зря D:")
 
             attemptsSpent++
             attemptsLeft--
@@ -83,7 +70,7 @@ fun main() {
 
             println()
 
-            println("Поздравляю! Вы смогли угадать пароль")
+            println("\nПоздравляю! Вы смогли угадать пароль")
             println("Всего потрачено попыток: ${++attemptsSpent}")
             println("Осталось попыток: ${--attemptsLeft}")
 
@@ -103,12 +90,23 @@ fun main() {
 
     Color.set(Color.BrightRed)
 
-    println("Сожалею, но вам не удалось угадать пароль. Вы проиграли! ;(")
+    println("\nСожалею, но вам не удалось угадать пароль. Вы проиграли!")
     println("Паролем было число $password")
     println("Ближайшая попытка: $closestAttempt")
 }
 
 fun selectGameMode() : GameMode {
+    println("Список игровых режимов:\n")
+
+    for (i in GameMode.values()) {
+        println("${i.ordinal + 1}. ${i.title} - попыток: ${i.attempts}")
+    }
+
+    printlnMultiply("- ", 25)
+
+    Color.reset()
+    println()
+
     print("Введите номер режима >> ")
     var mode: Int = -1
 
@@ -124,7 +122,11 @@ fun selectGameMode() : GameMode {
 
     println()
 
-    return GameMode.fromInt(mode - 1)
+    val gameMode = GameMode.fromInt(mode - 1)
+
+    Color.println("Вы выбрали режим ${gameMode.title}. Удачи в игре!", Color.Blue)
+
+    return gameMode
 }
 
 fun printMultiply(str: String, count: Int) {
