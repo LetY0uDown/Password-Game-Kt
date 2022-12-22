@@ -57,32 +57,30 @@ fun main() {
             continue
         }
 
-        if (abs(password - input!!) < closestAttempt) {
+        if (abs(password - input!!) < abs(password - closestAttempt)) {
             closestAttempt = input
         }
 
-        if (input == password) {
-            println()
+        when {
+            input == password -> {
+                println()
 
-            Color.set(Color.BrightGreen)
+                Color.set(Color.BrightGreen)
 
-            printlnMultiply("- ", 50)
+                printlnMultiply("- ", 50)
 
-            println()
+                println()
 
-            println("\nПоздравляю! Вы смогли угадать пароль")
-            println("Всего потрачено попыток: ${++attemptsSpent}")
-            println("Осталось попыток: ${--attemptsLeft}")
+                println("\nПоздравляю! Вы смогли угадать пароль")
+                println("Всего потрачено попыток: ${++attemptsSpent}")
+                println("Осталось попыток: ${--attemptsLeft}")
 
-            return
-        }
-
-        if (input < password) {
-            println("Неверно! Пароль больше, чем это число")
-        }
-
-        if (input > password) {
-            println("Неверно! Пароль меньше, чем это число")
+                return
+            }
+            input < password ->
+                println("Неверно! Пароль больше, чем это число")
+            else ->
+                println("Неверно! Пароль меньше, чем это число")
         }
 
         println("Попыток осталось: ${--attemptsLeft}\nВсего потрачено: ${++attemptsSpent}")
